@@ -6,43 +6,6 @@ html {
     text-shadow: 3px 3px blue;
 }
 
-#time, #question {
-    margin-top: 3%;
-}
-
-h1 {
-    font-size: 52px;
-    margin-top: 3%;
-}
-
-ul, #question {
-    font-size: 40px;
-    position: static;
-}
-
-li {
-    margin-top: 2%;
-    height: 48px;
-    width: 50%;
-    display: inline-block;
-    text-align: center;
-    position: relative;
-    padding-top: 6px;
-
-}
-
-li:first-child {
-    margin-top: 4%;
-}
-
-li:hover {
-    background-color:  rgb(82, 81, 81);
-    border-style: outset; 
-    border-width: 5px 5px; 
-    border-color: blue;
-    border-radius: 20px;
-}
-
 body {
     background-image: url("../images/background.jpg");
     background-size: cover;
@@ -56,7 +19,7 @@ body {
     left: 50%;
     transform: translate(-50%, -50%);
     text-align: center;
-    min-height: 90%;
+    min-height: 95%;
     min-width: 73%;
     background-color: rgba(124, 124, 124, 0.75);
     border-style: outset; 
@@ -64,3 +27,39 @@ body {
     border-color: blue;
     border-radius: 20px;
 }
+
+h1, #time, #question {
+    margin-top: 3%;
+}
+
+h1 {
+    font-size: 52px;
+}
+
+ul, #question {
+    font-size: 38px;
+}
+
+li {
+    margin-top: 2%;
+    height: 48px;
+    width: 50%;
+    display: inline-block;
+    text-align: center;
+    position: relative;
+    padding-top: 15px;
+    margin-bottom: 5px;
+
+}
+
+li:hover {
+    background-color:  rgb(100, 100, 100);
+    border-style: outset; 
+    border-width: 5px 5px; 
+    border-color: blue;
+    border-radius: 20px;
+    cursor: pointer;
+    padding-top: 10px;
+    margin-bottom: 0px;
+}
+
