@@ -1,0 +1,32 @@
+
+html {
+    font-family: 'Press Start 2P', cursive;
+    color: white;
+    text-shadow: 2px 2px blue;
+}
+
+p {
+    font-size: 24px;
+}
+
+body {
+    background-image: url("../images/background.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    z-index: -100;
+}
+
+.container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    height: 90%;
+    width: 75%;
+    background-color: rgba(95, 95, 95, 0.75);
+    border-style: solid; 
+    border-width: 5px 5px; 
+    border-color: blue;
+    border-radius: 20px;
+}
