@@ -64,13 +64,14 @@ li:hover {
 }
 
 #start {
-   margin-top: 200px;
-   height: 100px;
-   width: 300px;
-   font-size: 48px;
-   background-color: white;
-   color: blue;
-   font-family: 'Press Start 2P', cursive;
-   font-weight: bold;
+    margin-top: 150px;
+    text-align: center;
+    height: 100px;
+    width: 300px;
+    font-size: 48px;
+    background-color: white;
+    color: blue;
+    font-family: 'Press Start 2P', cursive;
+    font-weight: bold;
 }
 

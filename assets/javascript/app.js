@@ -1,44 +1,45 @@
-    
+
 var questions = {
-    question: ["Which one of these weapons is from Mega Man 2?", 
-                "Which of these is not a Robot Master?", 
-                "Which game introduced the character of Proto Man?", 
-                "Which Mega Man game introduced Rush the dog?", 
-                "Which of these is not a Mega Man series character?"],  
+    question: ["Which one of these weapons is from Mega Man 2?",
+        "Which of these is not a Robot Master?",
+        "Which game introduced the character of Proto Man?",
+        "Which Mega Man game introduced Rush the dog?",
+        "Which of these is not a Mega Man series character?"],
     answer1: ["Bubble Lead", "Yamato Man", "Mega Man 2", "Mega Man", "Bass"],
     answer2: ["Top Spin", "Dust Man", "Mega Man 3", "Mega Man 2", "Roll"],
     answer3: ["Gemini Laser", "Shock Man", "Mega Man 4", "Mega Man 3", "Dr. Light"],
     answer4: ["Magnet Missle", "Hard Man", "Mega Man 5", "Mega Man 4", "Dr. Dark"]
 };
-    
-var round = 1;
+
+var round = 0;
 var right = 0;
 var incorrect = 0;
 var timeout = 0;
 var counter = 7;
-var intervalId;
+var intervalId = 0;
+var go = false;
 
 
 
 
-$("#start").on("click", function() {
-    
+$("#start").click(function () {
+
     $("#start").hide();
-        for (i = 0; i < questions.question.length - 1; i++) {
-            
-            var buttons = $("<li>");
-            buttons.attr("answer-number", i)
-            buttons.attr("class", "buttons");
-            buttons.attr("id", "button" + [i]);
-            $("#answers").append(buttons);
-            var nextLine = $("<br>")
-            $("#answers").append(nextLine);
-        };
+    for (i = 0; i < questions.question.length - 1; i++) {
+
+        var buttons = $("<li>");
+        buttons.attr("answer-number", i)
+        buttons.attr("class", "buttons");
+        buttons.attr("id", "button" + [i]);
+        $("#answers").append(buttons);
+        var nextLine = $("<br>")
+        $("#answers").append(nextLine);
+    };
     clickStart();
 });
 
 function clickStart() {
-    
+
     right = 0;
     incorrect = 0;
     timeout = 0;
@@ -50,51 +51,98 @@ function clickStart() {
 
 function roundBegin(i) {
 
-    $("#question").html(questions.question[i]);
-    $("#button0").html(questions.answer1[i]);
-    $("#button1").html(questions.answer2[i]);
-    $("#button2").html(questions.answer3[i]);
-    $("#button3").html(questions.answer4[i]);
-    $("#time").html("Time Remaining: " + counter);
+    console.log(round);
 
+    if (round === 5) {
+        endGame();
+    } else {
 
-    var correct = [0, 2, 1, 2, 3];
-    var currentCorrect = correct[i];
-    counter = 7;
-    var intervalId = setInterval(countdown, 1000);
-
-    function countdown() {
-        counter--;
+        $(".buttons").show();
+        $("#time").show();
+        $("#question").show();
+        $("#question").html(questions.question[i]);
+        $("#button0").html(questions.answer1[i]);
+        $("#button1").html(questions.answer2[i]);
+        $("#button2").html(questions.answer3[i]);
+        $("#button3").html(questions.answer4[i]);
         $("#time").html("Time Remaining: " + counter);
 
+        var correctAnswer = ["Bubble Lead", "Shock Man", "Mega Man 3", "Mega Man 3", "Dr. Dark"];
+        var correctButton = [0, 2, 1, 2, 3];
 
-        
+        var currentCorrect = correctButton[i];
+        counter = 7;
+        clearInterval(intervalId);
+        intervalId = setInterval(countdown, 1000);
 
-        $(".buttons").on("click", function(i) {
-       
-            var currentAnswer = ($(this).attr("answer-number"));
-            currentAnswer = parseInt(currentAnswer);
-            console.log(currentAnswer);
-            console.log(currentCorrect);
-    
-            if (currentAnswer === currentCorrect) {
-                console.log("Hello");
+        function countdown() {
+            counter--;
+            $("#time").html("Time Remaining: " + counter);
+
+            $(".buttons").click(function () {
+
+                var currentAnswer = ($(this).attr("answer-number"));
+                currentAnswer = parseInt(currentAnswer);
+
+
+
+                if (currentAnswer === currentCorrect) {
+                    clearInterval(intervalId);
+                    $("#question").html("Correct!");
+                    $("#time").hide();
+                    $(".buttons").hide();
+                    right++;
+                    round++;
+                    setTimeout(function () {
+                        roundBegin(round);
+
+                    }, 5000);
+                }
+
+                if (currentAnswer !== currentCorrect) {
+                    clearInterval(intervalId);
+                    $("#time").html("Wrong!");
+                    $("#question").html("The Correct Answer was: " + correctAnswer[i]);
+                    $(".buttons").hide();
+                    incorrect++;
+                    round++;
+                    setTimeout(function () {
+                        roundBegin(round);
+
+                    }, 5000);
+                }
+
+
+
+            });
+
+            if (counter == 0) {
+                clearInterval(intervalId);
+                $("#time").html("Time's Up!");
+                $("#question").html("The Correct Answer was: " + correctAnswer[i]);
+                $(".buttons").hide();
+                timeout++;
+                round++;
+                setTimeout(function () {
+                    roundBegin(round);
+
+                }, 5000);
             }
-          
-            
-        });
 
-        if (counter == 0) {
-            clearInterval(intervalId);
-            timeout++;
-            roundBegin(i++);
         }
+
     }
 
-    
+    function endGame() {
+        $("#time").html("Results!");
+        $("#question").html("correct: " + right + "<br>" + "incorrect: " + incorrect + "<br>" + "timeouts: " + timeout);
+        $("#answers").empty();
+        $("#start").show();
 
 
 
+
+    }
 
 };
 
