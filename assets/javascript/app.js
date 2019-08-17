@@ -12,7 +12,6 @@ var questions = {
 };
 
 
-       
 
 var round = 0;
 var right = 0;
@@ -23,10 +22,8 @@ var gameRunning = false;
 var intervalId = null;
 
 
-        
 
-
-$("#start").click(function () {
+$("#start").unbind().click(function () {
 
     $("#start").hide();
     for (i = 0; i < questions.question.length - 1; i++) {
@@ -49,7 +46,7 @@ function clickStart() {
     timeout = 0;
     counter = 10;
 
-    
+
     roundBegin(0);
     startTimer();
 
@@ -58,10 +55,10 @@ function clickStart() {
 function startTimer() {
 
     if (!gameRunning) {
-      intervalId = setInterval(countdown, 1000);
-      gameRunning = true;
+        intervalId = setInterval(countdown, 1000);
+        gameRunning = true;
     }
-  }
+}
 
 function countdown() {
     counter--;
@@ -69,19 +66,10 @@ function countdown() {
 }
 
 function stop() {
-        clearInterval(intervalId);
-        gameRunning = false;
-        counter = 10;
+    clearInterval(intervalId);
+    gameRunning = false;
+    counter = 10;
 }
-
-
-
-
-
-
-
-
-
 
 
 function roundBegin(i) {
@@ -117,7 +105,7 @@ function roundBegin(i) {
 
     function answerTime() {
         x = setTimeout(function () {
-            
+
             stop();
             $("#time").html("Time's Up!");
             $("#question").html("The Correct Answer was: " + correctAnswer[i]);
@@ -129,37 +117,36 @@ function roundBegin(i) {
         }, 10000);
     };
 
-    $(".buttons").on("click", function () {
+    $(".buttons").unbind().click(function () {
 
 
         clearTimeout(x);
         var currentAnswer = ($(this).attr("answer-number"));
         currentAnswer = parseInt(currentAnswer);
-    
+
         if (currentAnswer === currentCorrect) {
-            
+
             stop();
             $("#question").html("Correct!");
             $("#time").hide();
             $(".buttons").hide();
             right++;
             round++;
-            wait();
-    
-        } else if (currentAnswer !== currentCorrect) {
-            
+
+        } else {
+
             stop();
             $("#time").html("Wrong!");
             $("#question").html("The Correct Answer was: " + correctAnswer[i]);
             $(".buttons").hide();
             incorrect++;
             round++;
-            wait();
+
         };
-    
+        wait();
     });
 
-    
+
 };
 
 
