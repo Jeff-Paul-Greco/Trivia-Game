@@ -15,12 +15,117 @@ var round = 0;
 var right = 0;
 var incorrect = 0;
 var timeout = 0;
-var counter = 7;
-var intervalId = 0;
-var go = false;
+var counter = 10;
+var gameRunning = false;
+
+function roundBegin(i) {
+
+    console.log(round);
+
+    if (round >= 5) {
+        endGame();
+    } else {
+
+        $(".buttons").show();
+        $("#time").show();
+        $("#question").show();
+        $("#question").html(questions.question[i]);
+        $("#button0").html(questions.answer1[i]);
+        $("#button1").html(questions.answer2[i]);
+        $("#button2").html(questions.answer3[i]);
+        $("#button3").html(questions.answer4[i]);
+        $("#time").html("Time Remaining: " + counter);
+
+        var correctAnswer = ["Bubble Lead", "Shock Man", "Mega Man 3", "Mega Man 3", "Dr. Dark"];
+        var correctButton = [0, 2, 1, 2, 3];
+        var currentCorrect = correctButton[i];
+
+        var intervalId = null;
+        intervalId = setInterval(countdown, 1000);
+
+
+        function countdown() {
+
+            if (counter === 0) {
+                gameRunning = false;
+                clearInterval(intervalId);
+                counter = 10;
+                $("#time").html("Time's Up!");
+                $("#question").html("The Correct Answer was: " + correctAnswer[i]);
+                $(".buttons").hide();
+                timeout++;
+                round++;
+                wait();
+            } else if (gameRunning = true) {
+                counter--;
+                $("#time").html("Time Remaining: " + counter);
+            }
+        }
+    };
+
+    $(".buttons").on("click", function () {
+        
+        gameRunning = false;
+        clearInterval(intervalId);
+        var currentAnswer = ($(this).attr("answer-number"));
+        currentAnswer = parseInt(currentAnswer);
+
+        if (currentAnswer === currentCorrect) {
+
+            counter = 10;
+            $("#question").html("Correct!");
+            $("#time").hide();
+            $(".buttons").hide();
+            right++;
+            round++;
+            wait();
+
+        } else {
+
+            counter = 10;
+            $("#time").html("Wrong!");
+            $("#question").html("The Correct Answer was: " + correctAnswer[i]);
+            $(".buttons").hide();
+            incorrect++;
+            round++;
+            wait();
+        };
+
+    });
+};
 
 
 
+
+
+function wait() {
+    setTimeout(function () {
+
+        roundBegin(round);
+
+    }, 5000);
+};
+
+
+function endGame() {
+    $("#time").html("Results!");
+    $("#question").html("correct: " + right + "<br>" + "incorrect: " + incorrect + "<br>" + "timeouts: " + timeout);
+    $("#answers").empty();
+    $("#start").show();
+    round = 0;
+    return
+}
+
+function clickStart() {
+
+    right = 0;
+    incorrect = 0;
+    timeout = 0;
+    counter = 10;
+
+    roundBegin(0);
+
+};
 
 $("#start").click(function () {
 
@@ -38,112 +143,6 @@ $("#start").click(function () {
     clickStart();
 });
 
-function clickStart() {
 
-    right = 0;
-    incorrect = 0;
-    timeout = 0;
-    counter = 7;
-
-    roundBegin(0);
-
-};
-
-function roundBegin(i) {
-
-    console.log(round);
-
-    if (round === 5) {
-        endGame();
-    } else {
-
-        $(".buttons").show();
-        $("#time").show();
-        $("#question").show();
-        $("#question").html(questions.question[i]);
-        $("#button0").html(questions.answer1[i]);
-        $("#button1").html(questions.answer2[i]);
-        $("#button2").html(questions.answer3[i]);
-        $("#button3").html(questions.answer4[i]);
-        $("#time").html("Time Remaining: " + counter);
-
-        var correctAnswer = ["Bubble Lead", "Shock Man", "Mega Man 3", "Mega Man 3", "Dr. Dark"];
-        var correctButton = [0, 2, 1, 2, 3];
-
-        var currentCorrect = correctButton[i];
-        counter = 7;
-        clearInterval(intervalId);
-        intervalId = setInterval(countdown, 1000);
-
-        function countdown() {
-            counter--;
-            $("#time").html("Time Remaining: " + counter);
-
-            $(".buttons").click(function () {
-
-                var currentAnswer = ($(this).attr("answer-number"));
-                currentAnswer = parseInt(currentAnswer);
-
-
-
-                if (currentAnswer === currentCorrect) {
-                    clearInterval(intervalId);
-                    $("#question").html("Correct!");
-                    $("#time").hide();
-                    $(".buttons").hide();
-                    right++;
-                    round++;
-                    setTimeout(function () {
-                        roundBegin(round);
-
-                    }, 5000);
-                }
-
-                if (currentAnswer !== currentCorrect) {
-                    clearInterval(intervalId);
-                    $("#time").html("Wrong!");
-                    $("#question").html("The Correct Answer was: " + correctAnswer[i]);
-                    $(".buttons").hide();
-                    incorrect++;
-                    round++;
-                    setTimeout(function () {
-                        roundBegin(round);
-
-                    }, 5000);
-                }
-
-
-
-            });
-
-            if (counter == 0) {
-                clearInterval(intervalId);
-                $("#time").html("Time's Up!");
-                $("#question").html("The Correct Answer was: " + correctAnswer[i]);
-                $(".buttons").hide();
-                timeout++;
-                round++;
-                setTimeout(function () {
-                    roundBegin(round);
-
-                }, 5000);
-            }
-
-        }
-
-    }
-
-    function endGame() {
-        $("#time").html("Results!");
-        $("#question").html("correct: " + right + "<br>" + "incorrect: " + incorrect + "<br>" + "timeouts: " + timeout);
-        $("#answers").empty();
-        $("#start").show();
-
-
-
-
-    }
-
-};
 
 
