@@ -13,3 +13,5 @@ After answering, you will be alerted as to whether or not you were correct. If y
 After 5 seconds, the next question will appear and the process repeats.
 
 After 5 turns the game will end and you will get the result of your correct/incorrect guesses.
+
+Deployed Link: https://jeff-paul-greco.github.io/TriviaGame
