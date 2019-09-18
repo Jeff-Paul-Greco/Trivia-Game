@@ -23,7 +23,7 @@ var intervalId = null;
 
 
 
-$("#start").click(function () {
+$("#start").unbind().click(function () {
 
     $("#start").hide();
     for (i = 0; i < questions.question.length - 1; i++) {
