@@ -11,6 +11,9 @@ var questions = {
     answer4: ["Magnet Missle", "Hard Man", "Mega Man 5", "Mega Man 4", "Dr. Dark"]
 };
 
+var gifs = ["assets/images/megaman.gif", "assets/images/megaman2.gif", "assets/images/megaman3.gif",
+    "assets/images/megaman4.gif", "assets/images/megaman5.gif"];
+
 
 
 var round = 0;
@@ -20,10 +23,18 @@ var timeout = 0;
 var counter = 10;
 var gameRunning = false;
 var intervalId = null;
+var gifTrack = 0;
 
 
 
 $("#start").unbind().click(function () {
+
+    $("#question").css("margin-top", "3%")
+    $("#startGif").hide();
+    $("#startGif").css("padding-bottom", "0px");
+    $("#img").css("display", "inline-block");
+    $("#question").css("display", "inline-block");
+    $("#answers").css("display", "inline");
 
     $("#start").hide();
     for (i = 0; i < questions.question.length - 1; i++) {
@@ -45,7 +56,6 @@ function clickStart() {
     incorrect = 0;
     timeout = 0;
     counter = 10;
-
 
     roundBegin(0);
     startTimer();
@@ -74,6 +84,8 @@ function stop() {
 
 function roundBegin(i) {
 
+    $("#img").hide();
+    $("#img").attr("src", "");
     counter = 10;
     console.log(round);
 
@@ -108,10 +120,13 @@ function roundBegin(i) {
 
             stop();
             $("#time").html("Time's Up!");
+            $("#img").show()
+            $("#img").attr("src", gifs[gifTrack])
             $("#question").html("The Correct Answer was: " + correctAnswer[i]);
             $(".buttons").hide();
             timeout++;
             round++;
+            gifTrack++;
             wait();
 
         }, 10000);
@@ -128,19 +143,25 @@ function roundBegin(i) {
 
             stop();
             $("#question").html("Correct!");
+            $("#img").show()
+            $("#img").attr("src", gifs[gifTrack])
             $("#time").hide();
             $(".buttons").hide();
             right++;
             round++;
+            gifTrack++;
 
         } else {
 
             stop();
             $("#time").html("Wrong!");
+            $("#img").show()
+            $("#img").attr("src", gifs[gifTrack])
             $("#question").html("The Correct Answer was: " + correctAnswer[i]);
             $(".buttons").hide();
             incorrect++;
             round++;
+            gifTrack++;
 
         };
         wait();
@@ -163,12 +184,15 @@ function wait() {
 
 function endGame() {
     $("#time").html("Results!");
+    $("#question").css("margin-top", "0%")
     $("#question").html("correct: " + right + "<br>" + "incorrect: " + incorrect + "<br>" + "timeouts: " + timeout);
     $("#answers").empty();
     $("#start").show();
+    $("#startGif").show();
     clearInterval(intervalId);
     gameRunning = false;
     round = 0;
+    gifTrack = 0;
     return
 }
 
