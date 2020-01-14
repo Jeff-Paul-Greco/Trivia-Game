@@ -14,4 +14,4 @@ After 5 seconds, the next question will appear and the process repeats.
 
 After 5 turns the game will end and you will get the result of your correct/incorrect guesses.
 
-Deployed Link: https://jeff-paul-greco.github.io/TriviaGame
+Deployed Link: https://jeff-paul-greco.github.io/Trivia-Game
